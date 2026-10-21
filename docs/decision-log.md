@@ -44,3 +44,17 @@ Chose: hatchling as the build backend, and argparse from the standard library fo
 Over: uv_build or setuptools for the backend; click or typer for the CLI.
 Because: hatchling is MIT-licensed, maintained and widely used. argparse adds no dependency, and the CLI is only a few commands (rule 11).
 Revisit if: The CLI grows enough subcommands that argparse becomes awkward to maintain.
+
+## 2026-10-21 - Maintenance check of Python mutation engines
+Task: 1.2
+Chose: Keep ADR-0002 as Proposed and build the mutation core on libcst 1.9.0.
+Over: Wrapping mutmut, cosmic-ray or mutpy.
+Because: Checked on 2026-10-21. mutmut 3.8.0 (Sep 2026, Python 3.13, 74 open issues) and cosmic-ray 8.7.0 (Aug 2026, Python 3.13, 52 open issues) are both active. mutpy's last release is 0.6.1 from Nov 2019, so it is dead. libcst 1.9.0 (Jul 2026) supports Python 3.13. I did not study mutmut's or cosmic-ray's library APIs in depth, so I have not shown that neither offers per-mutant control.
+Revisit if: Task 1.10 finds an engine with a clean per-mutant library API, or libcst stops being maintained.
+
+## 2026-10-21 - Mutant spans are character offsets
+Task: 1.2
+Chose: `Span` holds half-open character offsets into the source string.
+Over: Line and column pairs, or byte offsets.
+Because: `apply` (task 1.3) takes and returns a string, so it can cut at those numbers directly. Line and column can be derived later for reports.
+Revisit if: A consumer needs byte offsets, for example to edit files read as bytes.
