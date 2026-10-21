@@ -6,7 +6,10 @@ readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "libcst>=1.9.0",
+    "pydantic>=2.14.1",
+]
 
 [project.scripts]
 mutantlens = "mutantlens.cli:main"
@@ -27,14 +30,14 @@ dev = [
 ]
 
 [tool.ruff]
-extend-exclude = ["spike", "toy"]
+extend-exclude = ["spike", "toy", "tests/fixtures"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.pyright]
 include = ["mutantlens", "tests"]
-exclude = ["spike", "toy"]
+exclude = ["spike", "toy", "tests/fixtures"]
 typeCheckingMode = "strict"
 
 [tool.pytest.ini_options]
