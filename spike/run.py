@@ -51,20 +51,11 @@ def line_coverage(toy, test_file, module):
     return r.stdout.strip().splitlines()[-1].split()[-1]  # TOTAL row, last column
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("toy")
-    ap.add_argument("--tests", required=True)
-    args = ap.parse_args()
-
-    toy = Path(args.toy).resolve()
-    test_file = Path(args.tests).name
-    module = "shapes.py"
+def evaluate(toy, test_file, module="shapes.py"):
+    """Run test_file against every mutant of module. Returns (original_lines, results)."""
     tree = ast.parse((toy / module).read_text())
     original = ast.unparse(tree).splitlines()
-
-    killed = survived = errors = 0
-    print(f"suite: {args.tests}")
+    results = []
     for n, (lineno, t) in enumerate(mutants(tree), 1):
         mutated = ast.unparse(t).splitlines()
         changed = next(m.strip() for o, m in zip(original, mutated) if o != m)
@@ -73,13 +64,28 @@ def main():
             copy_project(toy, work)
             (work / module).write_text(ast.unparse(t) + "\n")
             outcome = run_pytest(work, test_file)
-        killed += outcome.startswith("killed")
-        survived += outcome == "survived"
-        errors += outcome.startswith("ERROR")
-        print(f"  mutant {n:2d} line {lineno:2d}  {changed:55s} {outcome}")
+        results.append({"n": n, "line": lineno, "changed": changed, "outcome": outcome, "mutated": mutated})
+    return original, results
 
-    total = killed + survived + errors
-    cov = line_coverage(toy, test_file, module)
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("toy")
+    ap.add_argument("--tests", required=True)
+    args = ap.parse_args()
+
+    toy = Path(args.toy).resolve()
+    test_file = Path(args.tests).name
+    print(f"suite: {args.tests}")
+    _, results = evaluate(toy, test_file)
+    for r in results:
+        print(f"  mutant {r['n']:2d} line {r['line']:2d}  {r['changed']:55s} {r['outcome']}")
+
+    killed = sum(r["outcome"].startswith("killed") for r in results)
+    survived = sum(r["outcome"] == "survived" for r in results)
+    errors = sum(r["outcome"].startswith("ERROR") for r in results)
+    total = len(results)
+    cov = line_coverage(toy, test_file, "shapes.py")
     print(f"{total} mutants, {killed} killed, {survived} survived, {errors} errors, "
           f"kill rate {100 * killed / total:.0f}% | line coverage {cov}")
 
