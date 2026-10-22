@@ -65,3 +65,10 @@ Chose: `Mutant.source_hash` is the SHA-256 of the full source text, and `apply` 
 Over: Checking only that `source[span]` still equals `original`; storing a line number.
 Because: A span is only true for the exact source it came from. An edit earlier in the file shifts every later span, and the text at a shifted span can still look right by accident. A whole-source hash catches every such case with one check.
 Revisit if: Task 1.7 needs a mutant id that survives unrelated edits. That id is a separate hash and does not replace this one.
+
+## 2026-10-22 - Starter operator set and its choices
+Task: 1.4
+Chose: Six operators, one id each: comparison_boundary, arithmetic_replace, boolean_replace, constant_replace, conditional_negate, return_replace. Integers change by +1 only. `conditional_negate` wraps the test as `not (test)`. `return_replace` returns `None`. `scan()` returns the mutants plus a skipped-invalid count; `find_mutants()` keeps its signature. Test files are skipped by the project walker, not by the core.
+Over: Also trying n-1 (doubles the integer mutants), tuple literals, string mutations, `==`/`!=` swaps, and a path argument on `find_mutants`.
+Because: One plus-one variant keeps the mutant count small while still covering off-by-one. The core only sees a string, so skipping test files has to happen where files are walked. Strings and tuples need position or semantics checks we have not done yet.
+Revisit if: Task 1.10 shows our mutant sets miss a class an established engine finds, or Stage 3 shows an operator produces mostly equivalent mutants.

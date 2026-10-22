@@ -51,3 +51,8 @@ Consequence: Stage 2 (test selection, caching, parallel runs).
 Expected: tests are stable.
 Observed: a mutant is called killed after one failing run. There is no second run to check.
 Consequence: a random failure gives a fake kill. Stage 1 should rerun a failure before calling it killed.
+
+## 2026-10-22 - Type-blind operators produce mutants that crash instead of failing
+Expected: every operator would produce plausible bugs a test could catch.
+Observed: `arithmetic_replace` turns `+` into `-` without knowing the types. On strings that raises `TypeError` (confirmed: `'a' - 'b'`). `return_replace` can also break callers that use the result. Run over `mutantlens/` itself the tool lists 109 mutants in 18 files, so such mutants are common.
+Consequence: with today's runner these crashes would count as kills (entry 1 above), inflating the score. Task 1.5 must separate a crash from a failing assertion before any score is trusted.

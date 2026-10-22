@@ -1,8 +1,10 @@
 import argparse
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 
 from mutantlens import __version__
+from mutantlens.assess import format_survey, survey
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -21,7 +23,11 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "assess":
-        print("not implemented")
+        path = Path(args.path)
+        if not path.exists():
+            print(f"error: path not found: {path}", file=sys.stderr)
+            return 2
+        print(format_survey(path, survey(path)))
     return 0
 
 

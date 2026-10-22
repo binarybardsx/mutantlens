@@ -8,7 +8,7 @@ import pytest
 
 from mutantlens.contracts.mutant import Mutant
 from mutantlens.mutate.apply import StaleMutantError, apply
-from mutantlens.mutate.find import find_mutants
+from mutantlens.mutate.find import COMPARISON_BOUNDARY, find_mutants
 from mutantlens.mutate.hashing import source_hash
 
 FIXTURE = Path(__file__).parent.parent / "fixtures" / "shapes.py"
@@ -24,9 +24,13 @@ SOURCES = {
 }
 
 
+def boundary_mutants(source: str) -> list[Mutant]:
+    return [m for m in find_mutants(source) if m.operator == COMPARISON_BOUNDARY]
+
+
 def test_hand_written_case() -> None:
     source = "def f(x):\n    return x > 3  # keep me\n"
-    (mutant,) = find_mutants(source)
+    (mutant,) = boundary_mutants(source)
     assert apply(source, mutant) == "def f(x):\n    return x >= 3  # keep me\n"
 
 
@@ -65,7 +69,7 @@ def tokens(source: str) -> list[str]:
 
 def test_every_toy_mutant_differs_at_exactly_one_token() -> None:
     source = SOURCES["toy"]
-    mutants = find_mutants(source)
+    mutants = boundary_mutants(source)
     assert len(mutants) == 14
     for mutant in mutants:
         before, after = tokens(source), tokens(apply(source, mutant))
@@ -92,7 +96,7 @@ def test_applying_the_reverse_swap_restores_the_source() -> None:
 
 def test_stale_mutant_is_rejected_with_a_clear_error() -> None:
     source = "def f(x):\n    return x > 3\n"
-    (mutant,) = find_mutants(source)
+    (mutant,) = boundary_mutants(source)
     edited = "# new comment\n" + source
     with pytest.raises(StaleMutantError, match="hash"):
         apply(edited, mutant)
