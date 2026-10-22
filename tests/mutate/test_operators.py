@@ -58,8 +58,8 @@ def test_arithmetic_replace() -> None:
     ]
 
 
-def test_boolean_replace() -> None:
-    assert pairs(fixture("boolean_replace"), "boolean_replace") == [
+def test_logical_replace() -> None:
+    assert pairs(fixture("logical_replace"), "logical_replace") == [
         ("and", "or"),
         ("or", "and"),
         ("and", "or"),
@@ -119,7 +119,7 @@ def test_toy_file_counts_per_operator() -> None:
     counts = Counter(m.operator for m in find_mutants(fixture_shapes()))
     assert dict(sorted(counts.items())) == {
         "arithmetic_replace": 3,
-        "boolean_replace": 5,
+        "logical_replace": 5,
         "comparison_boundary": 14,
         "conditional_negate": 7,
         "constant_replace": 8,

@@ -30,7 +30,7 @@ def test_assess_prints_mutant_counts_per_operator(
     assert "  comparison_boundary  1\n" in out
     assert "  constant_replace     1\n" in out
     assert "  return_replace       1\n" in out
-    assert "  boolean_replace      0\n" in out
+    assert "  logical_replace      0\n" in out
     assert "total mutants: 4" in out
     assert "skipped as invalid syntax: 0" in out
     assert "tests are not run yet" in out
@@ -44,7 +44,7 @@ def test_assess_accepts_a_single_file(
     assert main(["assess", str(file)]) == 0
     out = capsys.readouterr().out
     assert "files: 1 scanned" in out
-    assert "  boolean_replace      1\n" in out
+    assert "  logical_replace      1\n" in out
 
 
 def test_assess_never_writes_to_the_project(tmp_path: Path) -> None:

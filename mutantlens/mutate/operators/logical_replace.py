@@ -2,7 +2,7 @@ import libcst as cst
 
 from mutantlens.mutate.operators.base import Candidate, CandidateVisitor, Locator
 
-ID = "boolean_replace"
+ID = "logical_replace"
 
 _REPLACEMENTS: dict[type[cst.CSTNode], str] = {
     cst.And: "or",
@@ -17,7 +17,7 @@ class _Visitor(CandidateVisitor):
             self.add(node, replacement)
 
 
-class BooleanReplace:
+class LogicalReplace:
     id = ID
 
     def candidates(self, module: cst.Module, locator: Locator) -> list[Candidate]:

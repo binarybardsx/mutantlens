@@ -25,7 +25,7 @@ Each operator is a module in `mutantlens/mutate/operators/` with a stable id tha
 |---|---|---|
 | `comparison_boundary` | `>`↔`>=`, `<`↔`<=` | `==`, `!=`, `in`, `is` |
 | `arithmetic_replace` | `+`↔`-`, `*`↔`/`, `//`→`/`, `%`→`*`, `**`→`*`, and the `+=` style forms | unary `-` and `+`, bitwise and shift operators, `@` |
-| `boolean_replace` | `and`↔`or` | `not`, `&`, `\|` |
+| `logical_replace` | `and`↔`or` | `not`, `&`, `\|` |
 | `constant_replace` | integer `n` to `n + 1` (one variant only), `True`↔`False`, a non-empty list, set or dict literal to an empty one | floats, strings, tuples, already-empty collections |
 | `conditional_negate` | the test of `if`, `elif`, `while` and `x if c else y` becomes `not (test)` | `for` loops, comprehension filters |
 | `return_replace` | `return expr` becomes `return None` | bare `return`, `return None` |
