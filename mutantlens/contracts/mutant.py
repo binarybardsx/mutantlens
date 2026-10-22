@@ -11,7 +11,10 @@ class Span(BaseModel):
 
 
 class Mutant(BaseModel):
-    """One small fault: replace `original` at `span` with `replacement`."""
+    """One small fault: replace `original` at `span` with `replacement`.
+
+    `source_hash` ties the mutant to the exact source it was found in.
+    """
 
     model_config = ConfigDict(frozen=True)
 
@@ -19,3 +22,4 @@ class Mutant(BaseModel):
     span: Span
     original: str
     replacement: str
+    source_hash: str

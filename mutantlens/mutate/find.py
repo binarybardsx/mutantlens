@@ -5,6 +5,7 @@ import libcst as cst
 from libcst.metadata import CodeRange, MetadataWrapper, PositionProvider
 
 from mutantlens.contracts.mutant import Mutant, Span
+from mutantlens.mutate.hashing import source_hash
 
 COMPARISON_BOUNDARY = "comparison_boundary"
 
@@ -21,6 +22,7 @@ _NEWLINE = re.compile(r"\r\n|\r|\n")
 class _BoundaryFinder(cst.CSTVisitor):
     def __init__(self, source: str, positions: Mapping[cst.CSTNode, CodeRange]) -> None:
         self._source = source
+        self._source_hash = source_hash(source)
         self._positions = positions
         self._line_starts = [0] + [m.end() for m in _NEWLINE.finditer(source)]
         self.mutants: list[Mutant] = []
@@ -38,6 +40,7 @@ class _BoundaryFinder(cst.CSTVisitor):
                 span=Span(start=start, end=end),
                 original=self._source[start:end],
                 replacement=replacement,
+                source_hash=self._source_hash,
             )
         )
 

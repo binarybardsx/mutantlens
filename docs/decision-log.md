@@ -58,3 +58,10 @@ Chose: `Span` holds half-open character offsets into the source string.
 Over: Line and column pairs, or byte offsets.
 Because: `apply` (task 1.3) takes and returns a string, so it can cut at those numbers directly. Line and column can be derived later for reports.
 Revisit if: A consumer needs byte offsets, for example to edit files read as bytes.
+
+## 2026-10-22 - A mutant carries the hash of its whole source file
+Task: 1.3
+Chose: `Mutant.source_hash` is the SHA-256 of the full source text, and `apply` refuses a mutant whose hash does not match the source it is given.
+Over: Checking only that `source[span]` still equals `original`; storing a line number.
+Because: A span is only true for the exact source it came from. An edit earlier in the file shifts every later span, and the text at a shifted span can still look right by accident. A whole-source hash catches every such case with one check.
+Revisit if: Task 1.7 needs a mutant id that survives unrelated edits. That id is a separate hash and does not replace this one.

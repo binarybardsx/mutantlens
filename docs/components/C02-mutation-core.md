@@ -10,12 +10,12 @@ Enumerate mutants for a scope, apply one to a working copy, and revert it exactl
 ## Interface
 ```
 find_mutants(source: str) -> list[Mutant]        # 1.2 (built)
-apply(source: str, mutant: Mutant) -> str          # 1.3
+apply(source: str, mutant: Mutant) -> str          # 1.3 (built)
 # revert(): not built until a task needs it. Mutants are applied to a copy.
 ```
 Pure functions over strings. The core never touches the filesystem, the network or the clock.
 
-`Mutant` (in `mutantlens/contracts/mutant.py`) has four fields so far: `operator`, `span`, `original`, `replacement`. `Span` is a half-open range of character offsets into the source string. Mutants come back in source order. Source that does not parse raises `libcst.ParserSyntaxError`; the caller turns that into a typed outcome.
+`Mutant` (in `mutantlens/contracts/mutant.py`) has five fields so far: `operator`, `span`, `original`, `replacement`, `source_hash`. `source_hash` is the SHA-256 (hex, of the UTF-8 text) of the exact source the mutant was found in, from `mutantlens/mutate/hashing.py`. `Span` is a half-open range of character offsets into the source string. Mutants come back in source order. `apply` hashes the source it is given and raises `StaleMutantError` if it does not match the mutant's `source_hash`; nothing is changed in that case. Source that does not parse raises `libcst.ParserSyntaxError`; the caller turns that into a typed outcome.
 
 ## Starter operator set
 Task 1.2 has ONE operator: comparison boundary (> to >=, < to <=, >= to >, <= to <). The rest arrive in task 1.4, one at a time. The full candidate list, chosen from the survey literature, not invented: comparison operator replacement, arithmetic operator replacement, boolean operator replacement, constant replacement (including the off-by-one and empty-collection cases), conditional negation, and return-value replacement. Each operator has an id that appears in results, so per-operator usefulness is measurable later.

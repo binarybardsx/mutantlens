@@ -6,7 +6,8 @@
    "end": 43
   },
   "original": "<=",
-  "replacement": "<"
+  "replacement": "<",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -15,7 +16,8 @@
    "end": 53
   },
   "original": "<=",
-  "replacement": "<"
+  "replacement": "<",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -24,7 +26,8 @@
    "end": 63
   },
   "original": "<=",
-  "replacement": "<"
+  "replacement": "<",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -33,7 +36,8 @@
    "end": 106
   },
   "original": ">",
-  "replacement": ">="
+  "replacement": ">=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -42,7 +46,8 @@
    "end": 120
   },
   "original": ">",
-  "replacement": ">="
+  "replacement": ">=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -51,7 +56,8 @@
    "end": 134
   },
   "original": ">",
-  "replacement": ">="
+  "replacement": ">=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -60,7 +66,8 @@
    "end": 174
   },
   "original": "<",
-  "replacement": "<="
+  "replacement": "<=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -69,7 +76,8 @@
    "end": 243
   },
   "original": "<",
-  "replacement": "<="
+  "replacement": "<=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -78,7 +86,8 @@
    "end": 283
   },
   "original": "<",
-  "replacement": "<="
+  "replacement": "<=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -87,7 +96,8 @@
    "end": 323
   },
   "original": ">=",
-  "replacement": ">"
+  "replacement": ">",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -96,7 +106,8 @@
    "end": 405
   },
   "original": "<",
-  "replacement": "<="
+  "replacement": "<=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -105,7 +116,8 @@
    "end": 438
   },
   "original": ">",
-  "replacement": ">="
+  "replacement": ">=",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -114,7 +126,8 @@
    "end": 524
   },
   "original": "<=",
-  "replacement": "<"
+  "replacement": "<",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  },
  {
   "operator": "comparison_boundary",
@@ -123,6 +136,7 @@
    "end": 539
   },
   "original": "<=",
-  "replacement": "<"
+  "replacement": "<",
+  "source_hash": "bee2e08977ad28e433718c10e477c1896a8b2ef4add08efe4509f514026a9867"
  }
 ]
